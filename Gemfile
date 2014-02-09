@@ -1,0 +1,6 @@
+source "http://rubygems.org"
+gem "rake"
+gem "double-bag-ftps"
+gem "net-ftp-list"
+gem "relparser", :git => "git://github.com/FredrikL/relparser.git"
+gem "rufus-scheduler"
