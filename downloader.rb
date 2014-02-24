@@ -12,6 +12,7 @@ class Downloader
   end
 
   def run
+    puts Time.now.to_s
     connect
     check_dirs
     disconnect
@@ -43,18 +44,19 @@ class Downloader
 
       if(age < 4) then
         begin
-          r = RelParser.parse e.basename
+          r = RelParser.parse e.basename	
           if(settings["want"].any?{ |s| s.casecmp(r.name)==0 }) then
-
             @ftps.chdir(e.basename)
             files = @ftps.list
             if(files.any?{|f| Net::FTP::List.parse(f).basename.include?("COMPLETE")}) then
               puts "#{e.basename} is complete!"
               download(settings["save_to"],e.basename, files)
             end
-
+            @ftps.chdir("..")
           end
-        rescue => e
+        rescue => ex
+	  p ex
+	  p ex.backtrace
         end
       end
     end
